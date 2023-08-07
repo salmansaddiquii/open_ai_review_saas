@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       put '/auth/logout', to: 'authentication#logout'
 
       resources :reviews
+      resources :subscriptions
     end
   end
 end
