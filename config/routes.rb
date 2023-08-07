@@ -1,6 +1,20 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root to: "homes#index"
+  
+  devise_for :users
+  namespace :api, constraints: { format: 'json' } do
+    namespace :v1 do
+      resources :users do
+        collection do 
+          post :forgot_password
+          post :reset_password
+          put :change_password
+        end
+      end
+      post '/auth/login', to: 'authentication#login'
+      put '/auth/logout', to: 'authentication#logout'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+      resources :reviews
+    end
+  end
 end
