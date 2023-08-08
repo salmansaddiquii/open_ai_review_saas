@@ -46,6 +46,10 @@ gem "jwt"
 gem "mailjet"
 gem "ruby-openai"
 gem 'dotenv-rails', groups: [:development, :test]
+gem "rspec-rails"
+gem "factory_bot_rails"
+gem "faker"
+gem "database_cleaner"
 
 
 # Use Sass to process CSS
