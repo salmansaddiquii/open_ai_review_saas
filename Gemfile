@@ -50,6 +50,7 @@ gem "rspec-rails"
 gem "factory_bot_rails"
 gem "faker"
 gem "database_cleaner"
+gem 'rack-cors'
 
 
 # Use Sass to process CSS
