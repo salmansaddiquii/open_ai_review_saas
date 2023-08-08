@@ -36,7 +36,7 @@ class Api::V1::ReviewsController < Api::BaseController
         json_response(true, 200, 'Your monthly limit has been reached', nil, status: :ok)
       end
     else
-      json_response(true, 200, 'You must subscribe first', nil, status: :ok)
+      json_response(true, 200, "You don't have any subscription", nil, status: :ok)
     end
   end
 
