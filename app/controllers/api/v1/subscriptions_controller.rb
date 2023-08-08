@@ -4,25 +4,28 @@ class Api::V1::SubscriptionsController < Api::BaseController
 
   def index
     plans = Plan.all
-    if plans.present?
-      json_response(true, 200, 'Available plan found successfully', plans, status = :ok)
+
+    if plans.any?
+      json_response(true, 200, 'Available plans found successfully', plans, status: :ok)
     else
-      json_error_response('plans not found', status = :not_found)
+      json_error_response('No plans found', status: :not_found)
     end
   end
 
   def create
-    if params[:subscription][:user_id].present?
-      user = User.find_by(id: params[:subscription][:user_id])
-      unless user&.subscription
+    if (user_id = params.dig(:subscription, :user_id)).present?
+      user = User.find_by(id: user_id)
+
+      if user && !user.subscription
         subscription = Subscription.create(subscription_params)
-        if subscription.present?
-          json_response(true, 200, 'Subscription created successfully', subscription, status = :ok)
+
+        if subscription
+          json_response(true, 200, 'Subscription created successfully', subscription, status: :ok)
         else
-          json_error_response('Subscription not found', status = :not_found)
+          json_error_response('Failed to create subscription', status: :unprocessable_entity)
         end
       else
-        json_response(true, 200, 'You already have Subscription', user&.subscription, status = :ok)
+        json_response(true, 200, 'You already have a subscription', user&.subscription, status: :ok)
       end
     end
 	end
