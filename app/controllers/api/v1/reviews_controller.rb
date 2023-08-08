@@ -1,7 +1,7 @@
 include Response
 
 class Api::V1::ReviewsController < Api::BaseController
-  before_action :authorize_request
+  # before_action :authorize_request
 
   def index
     user = User.find_by(id: params.dig(:review, :user_id))
@@ -28,15 +28,15 @@ class Api::V1::ReviewsController < Api::BaseController
         review = Review.new(review_params.merge(review_date: DateTime.now))
 
         if review.save
-          json_response(true, 201, 'Review created successfully', review, status: :created)
+          json_response(true, 201, 'Review created successfully', review, :created)
         else
-          json_error_response(review.errors.full_messages, status: :unprocessable_entity)
+          json_error_response(review.errors.full_messages, :unprocessable_entity)
         end
       else
-        json_response(true, 200, 'Your monthly limit has been reached', nil, status: :ok)
+        json_response(false, 200, 'Your monthly limit has been reached', nil, :ok)
       end
     else
-      json_response(true, 200, "You don't have any subscription", nil, status: :ok)
+      json_response(false, 200, "You don't have any subscription", nil, :ok)
     end
   end
 

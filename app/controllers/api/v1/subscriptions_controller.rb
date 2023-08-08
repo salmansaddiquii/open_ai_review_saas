@@ -1,6 +1,6 @@
 class Api::V1::SubscriptionsController < Api::BaseController
   include Response
-  before_action :authorize_request
+  # before_action :authorize_request
 
   def index
     plans = Plan.all
@@ -20,12 +20,12 @@ class Api::V1::SubscriptionsController < Api::BaseController
         subscription = Subscription.create(subscription_params)
 
         if subscription
-          json_response(true, 200, 'Subscription created successfully', subscription, status: :ok)
+          json_response(true, 200, 'Subscription created successfully', subscription, :ok)
         else
-          json_error_response('Failed to create subscription', status: :unprocessable_entity)
+          json_error_response('Failed to create subscription', :unprocessable_entity)
         end
       else
-        json_response(true, 200, 'You already have a subscription', user&.subscription, status: :ok)
+        json_response(false, 200, 'You already have a subscription', user&.subscription, :ok)
       end
     end
 	end
